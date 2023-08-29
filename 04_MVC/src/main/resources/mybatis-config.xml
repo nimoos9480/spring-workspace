@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
+<configuration>
+	
+	<!-- 없는 경우 NULL처리 -->
+	<settings>
+		<setting name="jdbcTypeForNull" value="NULL" />
+	</settings>
+	
+	<!-- 별칭 등록 -->
+	<typeAliases>
+		<typeAlias type="com.kh.mvc.model.vo.Member" alias="Member"/>
+	</typeAliases>
+	
+	<!-- mapper 등록 -->
+	<mappers>
+		<mapper resource="mappers/member-mapper.xml"/>
+	</mappers>
+	
+</configuration>

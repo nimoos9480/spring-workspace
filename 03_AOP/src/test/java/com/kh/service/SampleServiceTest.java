@@ -1,5 +1,6 @@
 package com.kh.service;
 
+import org.aspectj.lang.annotation.AfterThrowing;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,4 +28,11 @@ public class SampleServiceTest {
 	public void testAdd() throws Exception {
 		log.info(service.doAdd("123", "456"));
 	}
+	
+//	@Test
+//	public void testAddError() throws Exception {
+//		log.info(service.doAdd("123", "ABC"));
+//	
+//	}
+	
 }
