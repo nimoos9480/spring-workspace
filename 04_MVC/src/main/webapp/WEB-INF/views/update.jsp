@@ -8,21 +8,14 @@
 </head>
 <body>
 	<h1>회원 정보 수정</h1>
-	<form action="update" method="post">
+	<form action="updateMember" method="post">
 	
 		ID : <input type="text" name="id" value="${vo.id}" readonly><br>
-		PASSWORD : <input type="password" name="password" value="${vo.password}"><br>
+		PASSWORD : <input type="password" name="pwd" value="${vo.pwd}"><br>
 		NAME : <input type="text" name="name" value="${vo.name}"><br>
-		ADDRESS : <input type="text" name="address" value="${vo.address}"><br>
+		ADDRESS : <input type="text" name="addr" value="${vo.addr}"><br>
 		<input type="submit" value="수정">
 	</form>
-	
-	<h2>비밀번호만 변경</h2>
-	<form action="/update.do" method="post">
-	
-		ID : <input type="text" name="id" value="${vo.id}" readonly><br>
-		PASSWORD : <input type="password" name="password" value="${vo.password}"><br>
-		<input type="submit" value="수정">
-	</form>
+
 </body>
 </html>

@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="memberMapper">
 
+<!-- config.xml의 typeAlias에서 Member 별칭 지정 -->
 	<resultMap type="Member" id="memberMap">
 		<id property="id" column="id" />
 		<result property="pwd" column="password" />
@@ -10,7 +11,7 @@
 	</resultMap>
 
 	<insert id="registerMember" parameterType="Member">
-		INSERT INTO member
+		INSERT INTO member(id, password, name, address)
 		VALUES(#{id}, #{pwd}, #{name}, #{addr})
 	</insert>
 
@@ -19,18 +20,19 @@
 		FROM member
 	</select>
 
-	<select id="findMember" parameterType="list" resultType="Member">
+	<select id="findMember" resultMap="memberMap"  parameterType="String">
 		SELECT *
 		FROM member
-		WHERE id IN
-		<foreach collection="list" item="item" open="(" close=")"
-			separator=",">
-			#{item}
-		</foreach>
-		 OR address=#{item}
+		<where>	 	 
+	 		<if test="keyword != null">
+	 			id LIKE '%' || #{keyword} || '%'
+	 			OR name LIKE '%' || #{keyword} || '%'
+	 			OR address LIKE '%' || #{keyword} || '%'
+	 		</if> 
+	 	</where>
 	</select>
 
-	<select id="login" parameterType="Member" resultType="Member">
+	<select id="login" parameterType="Member" resultMap="memberMap">
 		SELECT *
 		FROM member
 		WHERE id=#{id} AND password=#{pwd}
@@ -38,8 +40,7 @@
 
 	<update id="updateMember" parameterType="Member">
 		UPDATE member
-		SET
-		password=#{pwd}, name=#{name}, address=#{addr}
+		SET password=#{pwd}, name=#{name}, address=#{addr}
 		WHERE id=#{id}
 	</update>
 </mapper>
