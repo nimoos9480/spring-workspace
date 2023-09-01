@@ -25,6 +25,13 @@
         display: flex;
         justify-content: center;
       }
+     
+     tbody a {
+     	text-decoration: none;
+     	font-weight: bold;
+     }
+
+	 
     </style>
   </head>
   <body>
@@ -75,5 +82,6 @@
         </ul>
       </nav>
     </div>
+
   </body>
 </html>
