@@ -16,7 +16,7 @@ public class BoardDAO {
 	private SqlSessionTemplate session;
 	
 	public int insertBoard(Board board) {
-		System.out.println(board);
+		// System.out.println(board);
 		return session.insert("board.insert", board);
 	}
 	
@@ -32,8 +32,7 @@ public class BoardDAO {
 		return session.selectOne("board.select", no);
 	}
 	
-	public int updateBoard(Board board) {
-		
+	public int updateBoard(Board board) {		
 		return session.update("board.update", board);
 	}
 	
