@@ -23,7 +23,7 @@ public class MemberController {
 	@GetMapping("/member/login")
 	public void login() {}
 	
-	@RequestMapping("/member/login")
+	@PostMapping("/member/login")
 	public String signIn(Member vo, HttpServletRequest request) {
 		// 비즈니스 로직: 로그인 처리
 
@@ -33,7 +33,7 @@ public class MemberController {
 			HttpSession session = request.getSession();
 			session.setAttribute("vo", member); // 로그인 정보를 세션에 저장
 		}
-		return "/board/list";
+		return "redirect:/board/list";
 
 	}
 	
