@@ -5,10 +5,18 @@
 		<setting name="jdbcTypeForNull" value="NULL" />
 	</settings>
 
+	<!-- 
 	<typeAliases>
 		<typeAlias type="com.kh.mvc.model.vo.Board" alias="Board" />
 		<typeAlias type="com.kh.mvc.model.vo.Member" alias="Member" />
 	</typeAliases>
+	-->
+
+	<!-- 이렇게도 됨! 아래는 클래스명 자체가 별칭이 된다=>클래스명에서 VO를 뺀 이유 -->
+	<typeAliases>
+		<package name="com.kh.mvc.model.vo"/>	
+	</typeAliases>
+	
 
 	<!-- 단위 테스트를 위해서 추가 -->
 	<environments default="develop">

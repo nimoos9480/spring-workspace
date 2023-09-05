@@ -12,12 +12,12 @@ public class MemberDAO {
 	@Autowired
 	private SqlSessionTemplate session;
 	
-	public Member login(Member vo) {
-		return session.selectOne("memberMapper.login", vo);
+	public int resisterMember(Member vo) {
+		return session.insert("member.registerMember", vo);
 	}
-
+	
 	public Member getMemberById(String id) {
-		return session.selectOne("memberMapper.getMemberById", id);
+		return session.selectOne("member.getMemberById", id);
 	}
 
 

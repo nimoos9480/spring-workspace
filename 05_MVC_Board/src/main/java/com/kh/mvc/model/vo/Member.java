@@ -29,6 +29,12 @@ public class Member implements UserDetails {
 		authList.add(new SimpleGrantedAuthority(auth));
 		return authList;
 	}
+	
+	@Override
+	public String getPassword() {
+		return password;
+	}
+	
 	@Override
 	public String getUsername() {
 		return id;

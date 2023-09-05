@@ -15,16 +15,17 @@ public class MemberService implements UserDetailsService {
 	@Autowired
 	private MemberDAO dao;
 	
-	public Member login(Member vo) {
-		return dao.login(vo);
+	public int registerMember(Member vo) {
+		return dao.resisterMember(vo);
 	}
+	
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Member member = dao.getMemberById(username);  
 							// login.jsp에서 username과 id연결함
 		if(member == null) {
-			throw new UsernameNotFoundException("username " + username + "not found");
+			throw new UsernameNotFoundException("username not found");
 		}
 		return member;
 	}

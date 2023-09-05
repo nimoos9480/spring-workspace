@@ -1,8 +1,5 @@
 package com.kh.mvc.controller;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -13,34 +10,39 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.kh.mvc.model.service.MemberService;
 import com.kh.mvc.model.vo.Member;
 
+@RequestMapping("/member/*")
 @Controller
 public class MemberController {
 	
 	@Autowired
 	private MemberService service;
 	
+	@Autowired
+	private BCryptPasswordEncoder bcpe;
 	
-	@GetMapping("/member/login")
-	public void login() {}
-	
-	@PostMapping("/member/login")
-	public String signIn(Member vo, HttpServletRequest request) {
-		// 비즈니스 로직: 로그인 처리
+	@GetMapping("/register")
+	public void register() {}
 
-		Member member = service.login(vo);
-
-		if (member != null) {
-			HttpSession session = request.getSession();
-			session.setAttribute("vo", member); // 로그인 정보를 세션에 저장
-		}
-		return "redirect:/board/list";
-
+	@PostMapping("/register")
+	public String register(Member vo) {
+		
+		System.out.println("before password : " + vo.getPassword());
+		
+		// BcryptPasswordEncoder를 이용해서 암호화 처리
+		String encodePassword = bcpe.encode(vo.getPassword());		
+		System.out.println("after password : " + encodePassword);
+		
+		vo.setPassword(encodePassword);
+		
+		service.registerMember(vo);
+		return "redirect:/login";
 	}
 	
 	
-	@GetMapping("/member/error")
-	public void error() {}
-	
-	
 
+	@GetMapping("/login")
+	public void login() {}
+	
+	@GetMapping("/logout")
+	public void logout() {}
 }
