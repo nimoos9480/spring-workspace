@@ -2,19 +2,29 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="phone">
 
-	<insert id="insert" parameterType="Phone">
+	<insert id="insert" parameterType="phone">
 		INSERT INTO phone(num, model, price, vcode)
 		VALUES(#{num}, #{model}, #{price}, #{vcode})
 	</insert>
 	
+	<resultMap type="phone" id="phoneWithCompany">
+		<id column="num" property="num"/>
+		<result column="model" property="model"/>
+		<result column="price" property="price"/>
+		<result column="vcode" property="vcode"/>
+		<association property="company" javaType="company">
+			<id column="vcode" property="vcode"/>
+			<result column="vendor" property="vendor"/>
+		</association>
+	</resultMap>
+	
 	<!-- Dynamic Query 사용 : selectAll + selectOne (num) 둘다 사용할 수 있게 -->
-	<select id="select" resultType="phone" parameterType="Phone">
-		SELECT num, model, price, vcode
-		FROM phone 
-		JOIN company USING(#{vcode})
-		WHERE 
+	<select id="select" parameterType="String" resultMap="phoneWithCompany" >
+		SELECT p.num, p.model, p.price, p.vcode, c.vcode, c.vendor
+		FROM phone p
+		JOIN company c ON (p.vcode = c.vcode)
 		<if test="num != null">
-			num=#{num}
+			WHERE num=#{num}
 		</if>
 	</select>
 
@@ -25,22 +35,19 @@
 		WHERE num=#{num}		
 	</delete>
 	
-	<update id="update" parameterType="String">
+	<update id="update" parameterType="phone">
 		UPDATE phone 
 		SET model=#{model}, price=#{price}, vcode=#{vcode}
 		WHERE num=#{num}
 	</update>
 	
 	<!-- Dynamic Query 사용 : id와 pw 둘 다 입력했을 때랑, id만 입력했을 때를 같이 처리할 수 있게 -->
-	<select id="selectUser" resultType="phone" parameterType="UserInfo">
-		SELECT num, model, price, vcode
-		FROM phone
-		WHERE 
-		<if test="id !=null and pw != null">
-			id = #{id} AND pw=#{pW}
-		</if>
-		<if test="id != null">
-			AND id = #{id}
+	<select id="selectUser" resultType="userinfo" parameterType="userinfo">
+		SELECT id, pw
+		FROM userinfo
+		WHERE id = #{id}
+		<if test="pw != null">
+			AND pw=#{pw}
 		</if>
 		
 	</select>

@@ -1,5 +1,8 @@
 package com.kh.api.controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,38 +14,80 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.api.model.Phone;
+import com.kh.api.service.PhoneService;
 
 @RestController
 public class PhoneController {
 	
+	@Autowired
+	private PhoneService service;
+							// 서비스도 인터페이스로 주입 가능
+	
+	// http://localhost:8080/api/phone
 	@GetMapping("/phone")
 	public ResponseEntity select() {
 		// ReponseEntity() : 데이터와 함께 상태코드(ex:200)도 같이 보낼 수 있음
 		
 		// phone 전체 리스트
-		return new ResponseEntity("sample", HttpStatus.OK);		
+		try {
+			List<Phone> list = service.select();	
+			return new ResponseEntity(list, HttpStatus.OK);		
+		} catch(RuntimeException e) {
+			return new ResponseEntity(HttpStatus.NO_CONTENT);
+		}
+		
+		
 	}
+	
 	
 	@GetMapping("/phone/{num}")
 	public ResponseEntity select(@PathVariable String num) {
-		return new ResponseEntity("error", HttpStatus.NO_CONTENT);
+		
+		try {
+			Phone phone = service.select(num);
+			return new ResponseEntity(phone, HttpStatus.OK);
+		} catch(RuntimeException e) {
+			return new ResponseEntity(HttpStatus.NO_CONTENT);
+		}
+		
 		
 	} 
 	
+	// http://localhost:8080/api/phone
 	@PostMapping("/phone")
 	public ResponseEntity insert(@RequestBody Phone phone) {
-		return new ResponseEntity(HttpStatus.NOT_FOUND);
+		
+		try {
+			int result = service.insert(phone);
+			return new ResponseEntity(result, HttpStatus.OK);
+			
+		} catch(RuntimeException e) {
+			return new ResponseEntity(HttpStatus.NO_CONTENT);
+		}
+		
 		
 	}
 	
 	@PutMapping("/phone")
 	public ResponseEntity update(@RequestBody Phone phone) {
-		return new ResponseEntity(HttpStatus.BAD_REQUEST);
+		try {
+			service.update(phone);
+			return new ResponseEntity(HttpStatus.OK);
+			
+		} catch(RuntimeException e) {
+			return new ResponseEntity(HttpStatus.NO_CONTENT);
+		}
 	}
 	
+	// http://localhost:8080/api/phone
 	@DeleteMapping("/phone/{num}")
 	public ResponseEntity delete(@PathVariable String num) {
-		return new ResponseEntity(HttpStatus.OK);	
+		try {
+			service.delete(num);
+			return new ResponseEntity(HttpStatus.OK);	
+		} catch(RuntimeException e) {
+			return new ResponseEntity(HttpStatus.NO_CONTENT);
+		}
 	}
 
 }

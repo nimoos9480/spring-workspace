@@ -2,16 +2,18 @@ package com.kh.api.dao;
 
 import java.util.List;
 
-import org.mybatis.spring.SqlSessionTemplate;
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.kh.api.model.Phone;
 import com.kh.api.model.UserInfo;
 
+@Repository
 public class PhoneDAOImpl implements PhoneDAO {
 	
 	@Autowired
-	private SqlSessionTemplate session;
+	private SqlSession session;
 
 	@Override
 	public int insert(Phone phone) {
@@ -35,12 +37,13 @@ public class PhoneDAOImpl implements PhoneDAO {
 
 	@Override
 	public List<Phone> select() {
-		return session.selectList("phone.select");
+		return session.selectList("phone.select", null); 
+					// 동적쿼리 같이 쓰고 있기 때문에 null값 보내줘야 함
 	}
 
 	@Override
 	public UserInfo select(UserInfo user) {
-		return session.selectOne("phone.select", user);
+		return session.selectOne("phone.selectUser", user);
 	}
 
 	
