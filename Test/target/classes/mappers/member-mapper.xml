@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="memberMapper">
+<mapper namespace="mapper">
 
 	<resultMap type="Member" id="memberMap">
 		<id property="id" column="id"/>
@@ -14,7 +14,7 @@
 		VALUES (#{id}, #{pwd}, #{name}, #{addr})
 	</insert>
 	
-	<select id="showAllMember" resultType="memberMap">
+	<select id="showAllMember" resultMap="memberMap">
 		SELECT id, password, name, address
 		FROM member
 	</select>

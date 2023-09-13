@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapper namespace="mapper">
+
+	<resultMap type="Member" id="memberResultSet">
+		<id property="memberId" column="member_id"/>
+		<result property="memberPwd" column="member_pwd"/>
+		<result property="memberName" column="member_nm"/>
+		<result property="memberEnrollDate" column="member_enroll_dt"/>
+	</resultMap>
+
+	<select id="loginMember" parameterType="Member" resultMap="memberResultSet">
+		SELECT member_id, member_pwd, member_nm, member_enroll_dt
+		FROM member
+		WHERE member_id=#{memberId}, member_pwd=#{memberPwd}
+	</select>
+
+</mapper>

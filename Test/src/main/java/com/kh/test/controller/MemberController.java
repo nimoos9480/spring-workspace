@@ -128,7 +128,7 @@ public class MemberController {
 		if(session.getAttribute("vo")!= null) {
 			session.setAttribute("vo", vo);
 		}
-		return "redirece:/";
+		return "redirect:/";
 	}
 	
 	

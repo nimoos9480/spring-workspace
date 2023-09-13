@@ -8,7 +8,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	
 	<h1>회원 관리 기능</h1>
 	
 	<ul>
